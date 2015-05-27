@@ -23,6 +23,7 @@ function whitelist(source, keys) {
     }, {});
 }
 
+// default options for joi - you can override these
 var joiDefaults = {
     abortEarly   : false,
     convert      : true,
@@ -34,6 +35,7 @@ var joiDefaults = {
     context      : {}
 };
 
+// default options for the ValidationError - you can override these
 var errorDefaults = {
     message: 'Bad Request',
     status : 400
@@ -58,6 +60,17 @@ ValidationError.prototype.toString    = function () {
 };
 
 
+/**
+ * This method returns a middleware function that will do the following:
+ *
+ * - Validate requests against a validation schema
+ * - If no validation errors occur, the request is updated to reflect any validation changes
+ * - On an error, a new ValidationError is created and passed to the next() callback
+ *
+ * @param {Object} schema The joi schema to use
+ * @param {Object} options A hash of options to override any defaults. This includes both joi and validation options.
+ * @returns {Function} The middleware function
+ */
 module.exports = function (schema, options) {
 
     // set the defaults

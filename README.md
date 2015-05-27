@@ -7,6 +7,8 @@ A thin middleware for express applications that handles validation.
 
 The code is pretty minimal and only depends on the [joi](https://github.com/hapijs/joi) package for the schema definition and validation logic.
 
+After successful validation, the request object is modified to contain the validated/updated values.
+
 ## Installing
 
 ```javascript
@@ -62,6 +64,8 @@ app.post('/login', validate(validation.login.post), function (req, res) {
 
 app.post('/search', validate(validation.search.post), function (req, res) {
     // ...
+    // NOTE - req.body will contain the validated/udpated values
+    // e.g. if the user did not provide 'to' or 'limit' fields in the request, they now exist
 });
 
 app.get('/me', validate(validation.me.get), function (req, res) {
