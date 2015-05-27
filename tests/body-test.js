@@ -4,7 +4,7 @@ var request = require('supertest'),
     app     = require('./app'),
     expect  = require('expect.js');
 
-xdescribe('body validation', function () {
+describe('body validation', function () {
     it('happy day', function (done) {
         request(app)
             .post('/login')
