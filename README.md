@@ -1,5 +1,7 @@
-[![Dependency Status][dependency-image]][dependency-url]
 [![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Dependency Status][dependency-image]][dependency-url]
+[![DevDependencies Status][dev-dependency-image]][dev-dependency-url]
 
 # validate-express
 
@@ -89,3 +91,7 @@ validate-express is released under the MIT license.
 [npm-url]: https://www.npmjs.com/package/validate-express
 [dependency-image]: https://david-dm.org/tzellman/validate-express.svg
 [dependency-url]: https://david-dm.org/tzellman/validate-express
+[dev-dependency-image]: https://david-dm.org/tzellman/validate-express/dev-status.svg
+[dev-dependency-url]: https://david-dm.org/tzellman/validate-express/#info=devDependencies
+[travis-url]: http://travis-ci.org/tzellman/validate-express
+[travis-image]: https://secure.travis-ci.org/tzellman/validate-express.svg
