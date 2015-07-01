@@ -34,15 +34,18 @@ describe('body validation', function () {
     });
 
     it('should update the request body to use the defaults', function (done) {
+
+        var now = JSON.stringify(new Date()).substr(1, 10);
         request(app)
             .post('/search')
-            .send({q: 'test'})
+            .send({q: 'test', to: 'now'})
             .expect('Content-Type', /json/)
             .expect(200)
             .end(function (err, res) {
                 var response = JSON.parse(res.text);
                 expect(response.q).to.equal('test');
                 expect(response.limit).to.equal(10);
+                expect(response.to.substr(0, 10)).to.equal(now);
                 expect(response.to).to.be.ok();
                 done();
             });

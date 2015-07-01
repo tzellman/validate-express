@@ -23,6 +23,15 @@ function whitelist(source, keys) {
     }, {});
 }
 
+function isFunction(o) {
+    return typeof o == 'function' || false;
+}
+
+function isObject(o) {
+    return !!o && typeof o == 'object'
+}
+
+
 // default options for joi - you can override these
 var joiDefaults = {
     abortEarly   : false,
@@ -78,7 +87,18 @@ module.exports = function (schema, options) {
 
     function validate(req, field) {
         if (schema && hop.call(schema, field) && hop.call(req, field)) {
-            var result = joi.validate(req[field], schema[field], options);
+
+            var values = req[field];
+            // apply a transform to the input value, if a transform hash is supplied
+            if (hop.call(schema, 'transform')) {
+                Object.keys(schema.transform).forEach(function (k) {
+                    if (hop.call(values, k) && isFunction(schema.transform[k])) {
+                        values[k] = schema.transform[k].call(values, values[k]);
+                    }
+                })
+            }
+
+            var result = joi.validate(values, schema[field], options);
             // redefine the request field with the validated results
             if (!result.error || !result.error.details) {
                 req[field] = result.value;

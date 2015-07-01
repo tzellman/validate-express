@@ -1,6 +1,6 @@
 {
   "name": "validate-express",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Express validation library/utility using joi",
   "main": "index.js",
   "scripts": {
