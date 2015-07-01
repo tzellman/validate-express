@@ -48,10 +48,16 @@ var validation = {
                 }, 'to date'),
                 limit: joi.number().max(20).min(10).default(10)
             },
-            transform: {
+            before: {
                 // demonstrates providing a custom transform that is called prior to validation
                 to: function (value) {
                     return value === 'now' ? new Date() : value;
+                }
+            },
+            after : {
+                // demonstrates providing a custom transform that is called after successful validation
+                q: function (value) {
+                    return value.toUpperCase();
                 }
             }
         }

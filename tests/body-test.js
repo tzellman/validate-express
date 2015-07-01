@@ -43,7 +43,7 @@ describe('body validation', function () {
             .expect(200)
             .end(function (err, res) {
                 var response = JSON.parse(res.text);
-                expect(response.q).to.equal('test');
+                expect(response.q).to.equal('TEST');
                 expect(response.limit).to.equal(10);
                 expect(response.to.substr(0, 10)).to.equal(now);
                 expect(response.to).to.be.ok();

@@ -68,6 +68,14 @@ ValidationError.prototype.toString    = function () {
     return JSON.stringify(this.toJSON());
 };
 
+function applyTransform(transform, values) {
+    Object.keys(transform).forEach(function (k) {
+        if (hop.call(values, k) && isFunction(transform[k])) {
+            values[k] = transform[k].call(values, values[k]);
+        }
+    });
+}
+
 
 /**
  * This method returns a middleware function that will do the following:
@@ -89,18 +97,18 @@ module.exports = function (schema, options) {
         if (schema && hop.call(schema, field) && hop.call(req, field)) {
 
             var values = req[field];
-            // apply a transform to the input value, if a transform hash is supplied
-            if (hop.call(schema, 'transform')) {
-                Object.keys(schema.transform).forEach(function (k) {
-                    if (hop.call(values, k) && isFunction(schema.transform[k])) {
-                        values[k] = schema.transform[k].call(values, values[k]);
-                    }
-                })
+            // apply a transform to the pre-validated values
+            if (hop.call(schema, 'before')) {
+                applyTransform(schema.before, values);
             }
 
             var result = joi.validate(values, schema[field], options);
             // redefine the request field with the validated results
             if (!result.error || !result.error.details) {
+                // apply a transform to the pre-validated values
+                if (hop.call(schema, 'after')) {
+                    applyTransform(schema.after, result.value);
+                }
                 req[field] = result.value;
             }
             return (result.error || {}).details;
