@@ -1,10 +1,10 @@
 'use strict';
 
-var http       = require('http'),
-    express    = require('express'),
+var http = require('http'),
+    express = require('express'),
     bodyParser = require('body-parser'),
-    validate   = require('../index'),
-    joi        = require('joi');
+    validate = require('../index'),
+    joi = require('joi');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
@@ -13,19 +13,19 @@ app.set('port', 1337);
 
 
 var validation = {
-    login : {
+    login: {
         post: {
             body: {
                 identification: joi.string().required(),
-                password      : joi.string().required()
+                password: joi.string().required()
             }
         }
     },
     search: {
         post: {
-            body  : {
-                q    : joi.string().required(),
-                to   : joi.date().default(function () {
+            body: {
+                q: joi.string().required(),
+                to: joi.date().default(function () {
                     return new Date();
                 }, 'to date'),
                 limit: joi.number().max(20).min(10).default(10)
@@ -36,17 +36,17 @@ var validation = {
                     return value === 'now' ? new Date() : value;
                 }
             },
-            after : {
+            after: {
                 q: function (value) {
                     return value.toUpperCase();
                 }
             }
         }
     },
-    me    : {
+    me: {
         get: {
             headers: {
-                apikey      : joi.string().required(),
+                apikey: joi.string().required(),
                 'user-agent': joi.string().required().regex(/superagent/)
             }
         }

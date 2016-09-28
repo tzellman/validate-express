@@ -34,37 +34,37 @@ function isObject(o) {
 
 // default options for joi - you can override these
 var joiDefaults = {
-    abortEarly   : false,
-    convert      : true,
-    allowUnknown : true,
+    abortEarly: false,
+    convert: true,
+    allowUnknown: true,
     skipFunctions: false,
-    stripUnknown : false,
-    presence     : 'optional',
-    language     : {},
-    context      : {}
+    stripUnknown: false,
+    presence: 'optional',
+    language: {},
+    context: {}
 };
 
 // default options for the ValidationError - you can override these
 var errorDefaults = {
     message: 'Bad Request',
-    status : 400
+    status: 400
 };
 
 
 function ValidationError(errors, options) {
-    options      = extend(options, errorDefaults);
-    this.name    = 'ValidationError';
-    this.errors  = errors;
+    options = extend({}, options, errorDefaults);
+    this.name = 'ValidationError';
+    this.errors = errors;
     this.message = options.message;
-    this.status  = options.status;
+    this.status = options.status;
 }
 
-ValidationError.prototype             = Object.create(Error.prototype);
+ValidationError.prototype = Object.create(Error.prototype);
 ValidationError.prototype.constructor = ValidationError;
-ValidationError.prototype.toJSON      = function () {
+ValidationError.prototype.toJSON = function () {
     return {status: this.status, message: this.message, errors: this.errors};
 };
-ValidationError.prototype.toString    = function () {
+ValidationError.prototype.toString = function () {
     return JSON.stringify(this.toJSON());
 };
 

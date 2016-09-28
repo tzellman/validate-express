@@ -1,8 +1,8 @@
 'use strict';
 
 var request = require('supertest'),
-    app     = require('./app'),
-    expect  = require('expect.js');
+    app = require('./app'),
+    expect = require('expect.js');
 
 describe('body validation', function () {
     it('happy day', function (done) {
