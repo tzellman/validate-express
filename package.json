@@ -1,6 +1,6 @@
 {
   "name": "validate-express",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Express validation library/utility using joi",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "https://github.com/tzellman/validate-express.git"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4.0.0"
   },
   "keywords": [
     "express",
